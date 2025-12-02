@@ -3,7 +3,6 @@ name: Scheduled Merge
 on:
   schedule:
     - cron: '0 13 2 12 *'
-  workflow_dispatch:  # Manual trigger option
 
 jobs:
   merge:
