@@ -2,20 +2,20 @@ name: Scheduled Merge
 
 on:
   schedule:
-    - cron: '55 12 2 12 *'
+    - cron: '51 12 2 12 *'
   workflow_dispatch:
 
 jobs:
   merge:
     runs-on: ubuntu-latest
     permissions:
-      contents: write  # Add this!
+      contents: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          token: ${{ secrets.GITHUB_TOKEN }}  # Add this!
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Configure Git
         run: |
@@ -25,5 +25,6 @@ jobs:
       - name: Merge
         run: |
           git checkout main
+          git pull origin main  # Add this line!
           git merge origin/dev --no-ff -m "Scheduled merge from develop"
           git push origin main
