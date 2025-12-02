@@ -1,0 +1,26 @@
+name: Scheduled Merge
+
+on:
+  schedule:
+    - cron: '0 13 2 12 *'
+  workflow_dispatch:  # Manual trigger option
+
+jobs:
+  merge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Merge
+        run: |
+          git checkout main
+          git merge origin/dev --no-ff -m "Scheduled merge from develop"
+          git push origin main
